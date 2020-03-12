@@ -3,10 +3,21 @@ package utils
 import (
 	"flag"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"os"
 	"path/filepath"
 )
+
+func CreateRESTClient(config *rest.Config) *kubernetes.Clientset {
+	// create the clientset
+	clientset, err := kubernetes.NewForConfig(config)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	return clientset
+}
 
 func CreateClient(kubeConfig string) *kubernetes.Clientset {
 	// use the current context in kubeconfig
